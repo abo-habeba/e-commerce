@@ -3,10 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Branche;
+use App\Models\Companie;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -18,9 +20,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'firstName',
+        'lastName',
         'email',
+        'phone',
+        'address',
         'password',
+        'status',
+        'create_by',
+        'points',
+        'balance',
+        'last_login_at',
+        'branche_id',
     ];
 
     /**
@@ -42,4 +53,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function companies()
+    {
+        return $this->belongsToMany(Companie::class);
+    }
+
+    public function branches()
+    {
+        return $this->belongsToMany(Branche::class);
+    }
 }
