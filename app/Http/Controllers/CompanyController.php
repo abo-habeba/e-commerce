@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
@@ -12,8 +14,14 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::all()->load('branches');
-        return response()->json($companies);
+        try {
+            
+            $companies = Company::all()->load('branches');
+            return response()->json($companies);
+            
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -21,8 +29,28 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $company = Company::create($request->all());
-        return response()->json($company);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|unique:companies,name',
+                'email' => 'required|email|unique:companies,email',
+                'description' => 'nullable|string',
+                'address' => 'required|string',
+                'phone' => 'required|unique:companies,phone',
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        };
+
+        try {
+            
+            $company = Company::create($request->all());
+            return response()->json($company);
+            
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -30,7 +58,13 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        return response()->json($company);
+        try {
+            
+            return response()->json($company);
+            
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -38,8 +72,25 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        $company->update($request->all());
-        return response()->json($company);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|unique:companies,name',
+                'email' => 'required|email|unique:companies,email',
+                'description' => 'nullable|string',
+                'address' => 'required|string',
+                'phone' => 'required|unique:companies,phone',
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        };
+        try {
+            $company->update($request->all());
+            return response()->json($company);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -47,6 +98,18 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        $company->delete();
+
+        if ($company->branches()->count() > 0) {
+            return 'linked to branch';
+        }
+        
+        try {
+            
+            $company->delete();
+            return true;
+            
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }

@@ -6,7 +6,6 @@ use App\Models\Branch;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Termwind\Components\Dd;
 
 class BranchController extends Controller
 {
@@ -67,7 +66,7 @@ class BranchController extends Controller
      */
     public function update(Request $request, $branch)
     {
-        return response()->json($request);
+        return $request;
 
         // $branch->update($request->all());
         // return response()->json($branch);
