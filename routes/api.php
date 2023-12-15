@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/company',CompanyController::class);
+
 Route::post('/company/update/{company}',[CompanyController::class,'update']);
 
 Route::apiResource('/branch',BranchController::class);

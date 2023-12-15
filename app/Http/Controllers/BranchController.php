@@ -14,8 +14,14 @@ class BranchController extends Controller
      */
     public function index()
     {
-        $branches = Branch::all()->load('company');
-        return response()->json($branches);
+        try {
+
+            $branches = Branch::all()->load('company');
+            return response()->json($branches);
+        } catch (\Exception $e) {
+
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -38,18 +44,15 @@ class BranchController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         };
-        // $request->validate([
-        //     'name' => 'required|string|unique:branches,name',
-        //     'email' => 'required|email|unique:branches,email',
-        //     'description' => 'nullable|string',
-        //     'address' => 'required|string',
-        //     'phone' => 'required|integer',
-        //     'Company_id' => 'required',
-        // ]);
 
-        $branch = Branch::create($request->all());
-        return response()->json($branch);
+        try {
 
+            $branch = Branch::create($request->all());
+            return response()->json($branch);
+        } catch (\Exception $e) {
+
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -57,8 +60,13 @@ class BranchController extends Controller
      */
     public function show(Branch $branch)
     {
+        try {
 
-        return response()->json($branch->load('company'));
+            return response()->json($branch->load('company'));
+        } catch (\Exception $e) {
+
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -66,10 +74,14 @@ class BranchController extends Controller
      */
     public function update(Request $request, $branch)
     {
-        return $request;
+        try {
 
-        // $branch->update($request->all());
-        // return response()->json($branch);
+            $branch->update($request->all());
+            return response()->json($branch);
+        } catch (\Exception $e) {
+
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -77,6 +89,12 @@ class BranchController extends Controller
      */
     public function destroy(Branch $branch)
     {
-        $branch->delete();
+        try {
+
+            $branch->delete();
+            return true;
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }

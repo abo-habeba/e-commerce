@@ -86,8 +86,10 @@ class CompanyController extends Controller
             return response()->json($validator->errors());
         };
         try {
+            
             $company->update($request->all());
             return response()->json($company);
+            
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -98,11 +100,6 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-
-        if ($company->branches()->count() > 0) {
-            return 'linked to branch';
-        }
-        
         try {
             
             $company->delete();
