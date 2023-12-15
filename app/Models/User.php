@@ -3,8 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Branche;
-use App\Models\Companie;
+use App\Models\Branch;
+use App\Models\Company;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,7 +31,7 @@ class User extends Authenticatable
         'points',
         'balance',
         'last_login_at',
-        'branche_id',
+        'branch_id',
     ];
 
     /**
@@ -56,11 +56,11 @@ class User extends Authenticatable
 
     public function companies()
     {
-        return $this->belongsToMany(Companie::class);
+        return $this->belongsToMany(Company::class);
     }
 
     public function branches()
     {
-        return $this->belongsToMany(Branche::class);
+        return $this->belongsToMany(Branch::class);
     }
 }

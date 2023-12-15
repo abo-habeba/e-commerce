@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Models\User;
-use App\Models\Branche;
+use App\Models\Branch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Companie extends Model
+class Company extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -17,14 +17,13 @@ class Companie extends Model
         'imag',
         'address',
         'phone',
-        'Social',
     ];
-    public function usees()
+    public function users()
     {
         return $this->belongsToMany(User::class);
     }
     public function branches()
     {
-        return $this->hasMany(Branche::class);
+        return $this->hasMany(Branch::class,'Company_id','id');
     }
 }

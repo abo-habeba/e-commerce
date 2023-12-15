@@ -23,13 +23,12 @@ return new class extends Migration
             $table->integer('create_by');
             $table->integer('points')->default(0);
             $table->integer('balance')->default(0);
-            $table->timestamps('last_login_at');
+            $table->timestamp('last_login_at')->nullable();
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
-            $table->unsignedBigInteger('branche_id');
-            $table->foreign('branche_id')->references('id')->on('branches');
+            $table->unsignedBigInteger('branch_id');
+            $table->foreign('branch_id')->references('id')->on('branches');
             $table->timestamps();
-            
         });
     }
 

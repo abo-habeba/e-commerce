@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Companie;
+use App\Models\Branch_User;
 use Illuminate\Http\Request;
 
-class CompaniesController extends Controller
+class BranchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class CompaniesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Companie $companie)
+    public function show(Branch_User $branch_User)
     {
         //
     }
@@ -34,7 +34,7 @@ class CompaniesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Companie $companie)
+    public function update(Request $request, Branch_User $branch_User)
     {
         //
     }
@@ -42,7 +42,7 @@ class CompaniesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Companie $companie)
+    public function destroy(Branch_User $branch_User)
     {
         //
     }

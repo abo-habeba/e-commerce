@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Company;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Branche extends Model
+class Branch extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -14,16 +16,15 @@ class Branche extends Model
         'description',
         'address',
         'phone',
-        'Social',
-        'companie_id',
+        'Company_id',
     ];
-    public function usees()
+    public function users()
     {
         return $this->belongsToMany(User::class);
     }
 
-    public function companie()
+    public function company()
     {
-        return $this->belongsTo(Companie::class);
+        return $this->belongsTo(Company::class,'Company_id','id');
     }
 }
